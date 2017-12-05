@@ -1,6 +1,7 @@
 let express = require('express')
 let bodyParser = require('body-parser')
-let app = express()
+var http = require('http');
+var app = express();
 
 //array to hold schools
 var schools = [ ];
@@ -19,11 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
 
-//set app to run on port 3000
-app.listen(3000, function () {
-  console.log('Reminder app listening on port 3000')
-});
-
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../views', 'index.html')))
 
 //routes for /schools
 app.route('/schools')
@@ -136,4 +133,7 @@ app.route('/schools/:sname/teachers/:tname/comments/:cid')
   res.json({message: "Comment deleted successfully!"})
 });
 
-module.exports = app;
+//set app to run on port 3000
+app.listen(3000, function () {
+  console.log('Reminder app listening on port 3000')
+});
